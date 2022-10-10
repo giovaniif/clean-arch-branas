@@ -1,6 +1,6 @@
-import { Coupon } from '../src/coupon'
-import { Item } from '../src/item'
-import { Order } from '../src/order'
+import { Coupon } from '../src/domain/entity/coupon'
+import { Item } from '../src/domain/entity/item'
+import { Order } from '../src/domain/entity/order'
 
 describe('Order', () => {
   it('should not create an order with an invalid cpf', () => {

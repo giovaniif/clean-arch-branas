@@ -1,4 +1,4 @@
-import { Cpf } from "../src/cpf";
+import { Cpf } from "./cpf";
 import { Coupon } from "./coupon";
 import { Item } from "./item";
 import { OrderItem } from "./order-item";

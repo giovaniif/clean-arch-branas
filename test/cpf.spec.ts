@@ -1,4 +1,4 @@
-import { Cpf } from "../src/cpf"
+import { Cpf } from "../src/domain/entity/cpf"
 
 describe('CpfValiator', () => {
   it('should return true for valid cpf with digit bigger than zero', () => {
