@@ -3,6 +3,7 @@ import { Order } from "../domain/entity/order"
 import { OrderRepository } from "../domain/repositories/order-repository"
 import { CouponRepository } from "../domain/repositories/coupon-repository"
 import { RepositoryFactory } from "../domain/factory/repository"
+import FreightCalculator from "../domain/entity/freight-calculator"
 
 export class Checkout {
   private readonly orderRepository: OrderRepository
@@ -20,6 +21,7 @@ export class Checkout {
     for (const orderItem of input.orderItems) {
       const item = await this.itemRepository.getItem(orderItem.idItem)
       order.addItem(item, orderItem.quantity)
+      order.freight += FreightCalculator.calculate(item) * orderItem.quantity
     }
     if (input.coupon) {
       const coupon = await this.couponRepository.getCoupon(input.coupon)

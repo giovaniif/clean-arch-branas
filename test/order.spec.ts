@@ -63,6 +63,7 @@ describe('Order', () => {
   it('should create an order with freight', () => {
     const order = new Order('111.444.777-35', new Date("2021-01-01T10:00:00"))
     order.addItem(new Item(1, "Guitarra", 1000, new Dimension(100, 30, 10, 3)), 1)
+    order.freight = 30
 
     const total = order.getTotal()
 
