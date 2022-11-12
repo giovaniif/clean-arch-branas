@@ -2,13 +2,13 @@ import { Cpf } from "./cpf";
 import { Coupon } from "./coupon";
 import { Item } from "./item";
 import { OrderItem } from "./order-item";
-import FreightCalculator from "./freight-calculator";
 import { OrderCode } from "./order-code";
+import { OrderCoupon } from "./order-coupon";
 
 export class Order {
   cpf: Cpf 
   orderItems: OrderItem[]
-  coupon?: Coupon
+  coupon?: OrderCoupon
   freight = 0
   private code: OrderCode
   
@@ -24,7 +24,8 @@ export class Order {
   }
 
   addCoupon (coupon: Coupon) {
-    this.coupon = coupon
+    if (coupon.isExpired(this.date)) return
+    this.coupon = new OrderCoupon(coupon.code, coupon.percentage) 
   }
 
   getCode () {
@@ -37,10 +38,9 @@ export class Order {
       return total
     }, 0)
     if (this.coupon) {
-      total -= this.coupon.calculateDiscount(total, this.date)
+      total -= this.coupon.calculateDiscount(total)
     }
     total += this.freight
     return total
   }
-
 }
