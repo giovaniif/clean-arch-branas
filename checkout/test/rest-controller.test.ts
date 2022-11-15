@@ -13,7 +13,7 @@ describe("Order Controller", () => {
     const response = await axios.post('http://localhost:3000/preview', input)
     const preview = response.data
 
-    expect(preview.total).toBe(6350)
+    expect(preview.total).toBe(6330)
   })
 
   test("should test the preview by the API with discount", async () => {
@@ -29,7 +29,7 @@ describe("Order Controller", () => {
     const response = await axios.post('http://localhost:3000/preview', input)
     const preview = response.data
 
-    expect(preview.total).toBe(5132)
+    expect(preview.total).toBe(5112)
   })
 
   test("should test the simulate freight by the API", async () => {

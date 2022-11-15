@@ -9,6 +9,8 @@ import { Item } from "./domain/entity/item"
 import { Zipcode } from "./domain/entity/zipcode"
 import { OrderController } from "./infra/controller/order-controller"
 import MemoryRepositoryFactory from "./infra/factory/memory-repository"
+import { CalculateFreightHttpGateway } from "./infra/gateway/calculate-freight"
+import { GetItemHttpGateway } from "./infra/gateway/get-item"
 import { ExpressAdapter } from "./infra/http/express-adapter"
 import { CouponRepositoryMemory } from "./infra/repository/memory/coupon-repository-memory"
 import { ItemRepositoryMemory } from "./infra/repository/memory/item-repository-memory"
@@ -24,7 +26,9 @@ const couponRepository = new CouponRepositoryMemory()
 const repositoryFactory = new MemoryRepositoryFactory()
 couponRepository.save(new Coupon("VALE20", 20))
 const zipcodeRepository = new ZipcodeRepositoryMemory()
-const preview = new Preview(itemRepository, couponRepository, zipcodeRepository)
+const calculateFreightGateway = new CalculateFreightHttpGateway()
+const getItemGateway = new GetItemHttpGateway()
+const preview = new Preview(couponRepository, getItemGateway, calculateFreightGateway)
 const checkout = new Checkout(repositoryFactory)
 const getOrdersByCpf = new GetOrdersByCpf(orderRepository)
 zipcodeRepository.save(new Zipcode('88015600', 'Rua Almirante Lamego', 'Centro', new Coord(-27.5945, -48.5477)))
@@ -32,4 +36,4 @@ zipcodeRepository.save(new Zipcode('22060030', 'Rua Aires Saldanha', 'Copacabana
 const simulateFreight = new SimulateFreight(itemRepository, zipcodeRepository)
 const httpServer = new ExpressAdapter()
 new OrderController(httpServer, preview, checkout, getOrdersByCpf, simulateFreight)
-httpServer.listen(3000, () => console.log('app running'))
+httpServer.listen(3000, () => console.log('checkout running'))
