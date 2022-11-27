@@ -9,7 +9,7 @@ export class StockRepositoryMemory implements StockRepository {
   }
 
   async getStockEntries(idItem: number): Promise<StockEntry[]> {
-    return this.stockEntries.filter(stockEntry => stockEntry.idItem === idItem)
+    return this.stockEntries.filter(stockEntry => stockEntry.idItem === Number(idItem))
   }
 
   async save(stockEntry: StockEntry): Promise<void> {

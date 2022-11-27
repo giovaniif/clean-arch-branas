@@ -6,6 +6,7 @@ import { StockRepositoryMemory } from "../../src/infra/repository/memory/stock-r
 describe('DecrementStock', () => {
   it('should decrement the stock', async () => {
     const stockRepository = new StockRepositoryMemory()
+    await stockRepository.clear()
     stockRepository.save(new StockEntry(1, 'in', 20))
     const decrementStock = new DecrementStock(stockRepository)
     const input = {
