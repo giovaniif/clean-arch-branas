@@ -1,4 +1,4 @@
-import { Coupon } from "../src/domain/entity/coupon"
+import { Coupon } from "../../src/domain/entity/coupon"
 
 describe('Coupon', () => {
   it('should calculate the discount', () => {

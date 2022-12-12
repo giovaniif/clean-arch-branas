@@ -4,7 +4,7 @@ import { CalculateFreightGateway } from "../../application/gateways/calculate-fr
 
 export class CalculateFreightHttpGateway implements CalculateFreightGateway {
   async calculate(orderItems: { volume: number; density: number; quantity: number; }[], from?: string | undefined, to?: string | undefined): Promise<number> {
-    const response = await axios.post('http://localhost:3001/calculateFreight', { orderItems, from, to })
+    const response = await axios.post('http://localhost:3001/calculateFreight/', { orderItems, from, to })
     const freight = response.data
     return freight
   }

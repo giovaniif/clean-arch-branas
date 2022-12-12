@@ -1,15 +1,18 @@
-import { ItemRepository } from "../domain/repositories/item-repository"
-import { Order } from "../domain/entity/order"
-import { CouponRepository } from "../domain/repositories/coupon-repository"
-import { CalculateFreightGateway } from "./gateways/calculate-freight"
-import { GetItemGateway } from "./gateways/get-item"
+import { Order } from "../../domain/entity/order"
+import { RepositoryFactory } from "../../domain/factory/repository"
+import { CouponRepository } from "../../domain/repositories/coupon-repository"
+import { CalculateFreightGateway } from "../gateways/calculate-freight"
+import { GetItemGateway } from "../gateways/get-item"
 
 export class Preview {
+  private readonly couponRepository: CouponRepository
   constructor (
-    private readonly couponRepository: CouponRepository,
+    repositoryFactory: RepositoryFactory,
     private readonly getItemGateway: GetItemGateway,
     private readonly calculateFreightGateway: CalculateFreightGateway
-  ) {}
+  ) {
+    this.couponRepository = repositoryFactory.createCouponRepository()
+  }
 
   async execute (input: Input): Promise<number> {
     const order = new Order(input.cpf)
@@ -22,11 +25,10 @@ export class Preview {
     order.freight = await this.calculateFreightGateway.calculate(orderItems, input.from, input.to)
     if (input.coupon) {
       const coupon = await this.couponRepository.getCoupon(input.coupon)
-      if (coupon) {
-        order.addCoupon(coupon)
-      }
+      if (coupon) order.addCoupon(coupon)
     }
-    return order.getTotal()
+    const total = order.getTotal()
+    return total
   }
 }
 

@@ -1,4 +1,4 @@
-import { OrderCode } from "../src/domain/entity/order-code"
+import { OrderCode } from "../../src/domain/entity/order-code"
 
 describe('OrderCode', () => {
   it('should create an order code', () => {

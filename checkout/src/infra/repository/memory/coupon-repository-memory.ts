@@ -5,7 +5,7 @@ export class CouponRepositoryMemory implements CouponRepository {
   private coupons: Coupon[]
 
   constructor () {
-    this.coupons = []
+    this.coupons = [new Coupon("VALE20", 20), new Coupon("EXPIRED", 20, new Date('1999-01-01'))]
   }
 
   async save (coupon: Coupon): Promise<void> {
