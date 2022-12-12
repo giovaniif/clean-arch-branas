@@ -5,7 +5,6 @@ export class DecrementStock {
   constructor (readonly stockRepository: StockRepository) {}
 
   async execute (input: Input): Promise<void> {
-    console.log('decrement')
     await this.stockRepository.save(new StockEntry(input.idItem, 'out', input.quantity))
   }
 }
